@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import BackgroundVideo from './assets/background.mp4';
+import axios from 'axios'; 
 
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(email);
+        try {
+            const response = await axios.post('/api/login', {
+                email: email,
+                password: pass
+            });
+        } catch (error) {
+            console.error('Login error:', error.response.data);
+        }
     }
     
     return (

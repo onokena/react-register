@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import BackgroundVideo from './assets/background.mp4';
+import axios from 'axios';
 
 export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(email);
+        try {
+            const response = await axios.post('/api/register', {
+                username: name,
+                email: email,
+                password: pass
+            });
+        } catch (error) {
+            // Handle registration error (e.g., display error message to user)
+            console.error('Registration error:', error.response.data);
+        }
     }
 
+    
     return(
         <div className="auth-form-container">
             <video autoPlay muted loop className="background-video">
